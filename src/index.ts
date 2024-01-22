@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { error, success } from "./helpers/logger";
 import authRoutes from "./routes/auth.routes";
+import patientRoutes from "./routes/patient.routes";
+import staffRoutes from "./routes/staff.routes";
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", authRoutes);
+app.use("/api/patient", patientRoutes);
+app.use("/api/staff", staffRoutes);
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "404: Route Not Found" });
 });
