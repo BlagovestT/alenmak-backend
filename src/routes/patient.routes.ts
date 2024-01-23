@@ -17,7 +17,7 @@ router.get("/:id", validateToken, getSinglePatient);
 router.post("/create", validateToken, createPatient);
 router.put("/:id", validateToken, updatePatient);
 router.delete("/:id", validateToken, deletePatient);
-router.put("/:id/pay", validateToken, payPatient);
-router.put("/:id/unpay", validateToken, unpayPatient);
+router.put("/pay/:id", validateToken, payPatient);
+router.put("/unpay/:id", validateToken, unpayPatient);
 
 export default router;
