@@ -84,7 +84,7 @@ exports.deletePatient = (0, express_async_handler_1.default)((req, res) => __awa
 //@access private
 exports.payPatient = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const patient = yield patient_model_1.default.findByIdAndUpdate(req.params.id, {
-        status: "paid",
+        paid: "paid",
     }, { new: true });
     if (!patient) {
         res.status(404);
@@ -97,7 +97,7 @@ exports.payPatient = (0, express_async_handler_1.default)((req, res) => __awaite
 //@access private
 exports.unpayPatient = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const patient = yield patient_model_1.default.findByIdAndUpdate(req.params.id, {
-        status: "unpaid",
+        paid: "unpaid",
     }, { new: true });
     if (!patient) {
         res.status(404);

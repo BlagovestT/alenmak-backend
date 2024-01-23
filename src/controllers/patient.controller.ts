@@ -90,7 +90,7 @@ export const payPatient = expressAsyncHandler(async (req, res) => {
   const patient = await Patient.findByIdAndUpdate(
     req.params.id,
     {
-      status: "paid",
+      paid: "paid",
     },
     { new: true }
   );
@@ -110,7 +110,7 @@ export const unpayPatient = expressAsyncHandler(async (req, res) => {
   const patient = await Patient.findByIdAndUpdate(
     req.params.id,
     {
-      status: "unpaid",
+      paid: "unpaid",
     },
     { new: true }
   );
