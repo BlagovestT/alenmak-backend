@@ -12,7 +12,7 @@ router.get("/:id", validateTokenHandler_1.validateToken, patient_controller_1.ge
 router.post("/create", validateTokenHandler_1.validateToken, patient_controller_1.createPatient);
 router.put("/:id", validateTokenHandler_1.validateToken, patient_controller_1.updatePatient);
 router.delete("/:id", validateTokenHandler_1.validateToken, patient_controller_1.deletePatient);
-router.put("/:id/pay", validateTokenHandler_1.validateToken, patient_controller_1.payPatient);
-router.put("/:id/unpay", validateTokenHandler_1.validateToken, patient_controller_1.unpayPatient);
+router.put("/pay/:id", validateTokenHandler_1.validateToken, patient_controller_1.payPatient);
+router.put("/unpay/:id", validateTokenHandler_1.validateToken, patient_controller_1.unpayPatient);
 exports.default = router;
 //# sourceMappingURL=patient.routes.js.map
