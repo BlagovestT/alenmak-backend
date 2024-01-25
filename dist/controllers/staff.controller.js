@@ -37,7 +37,7 @@ exports.getSingleStaffMember = (0, express_async_handler_1.default)((req, res) =
 //!@route POST /api/staff/member/create
 //@access private
 exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { first_name, last_name, salary } = req.body;
+    const { first_name, last_name, gender, occupation, salary } = req.body;
     if (!first_name || !last_name || !salary) {
         res.status(400);
         throw new Error("All fields are required");
@@ -45,6 +45,8 @@ exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => _
     const staffMember = new staff_models_1.default({
         first_name,
         last_name,
+        gender,
+        occupation,
         salary,
     });
     const createdStaffMember = yield staffMember.save();
@@ -54,12 +56,13 @@ exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => _
 //!@route PUT /api/staff/member/:id
 //@access private
 exports.updateStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { first_name, last_name, salary, status } = req.body;
+    const { first_name, last_name, gender, occupation, salary } = req.body;
     const staffMember = yield staff_models_1.default.findByIdAndUpdate(req.params.id, {
         first_name,
         last_name,
+        gender,
+        occupation,
         salary,
-        status,
     }, { new: true });
     if (!staffMember) {
         res.status(404);

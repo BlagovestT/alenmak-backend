@@ -25,7 +25,7 @@ export const getSingleStaffMember = expressAsyncHandler(async (req, res) => {
 //!@route POST /api/staff/member/create
 //@access private
 export const createStaffMember = expressAsyncHandler(async (req, res) => {
-  const { first_name, last_name, salary } = req.body;
+  const { first_name, last_name, gender, occupation, salary } = req.body;
 
   if (!first_name || !last_name || !salary) {
     res.status(400);
@@ -35,6 +35,8 @@ export const createStaffMember = expressAsyncHandler(async (req, res) => {
   const staffMember = new Staff({
     first_name,
     last_name,
+    gender,
+    occupation,
     salary,
   });
 
@@ -47,15 +49,16 @@ export const createStaffMember = expressAsyncHandler(async (req, res) => {
 //!@route PUT /api/staff/member/:id
 //@access private
 export const updateStaffMember = expressAsyncHandler(async (req, res) => {
-  const { first_name, last_name, salary, status } = req.body;
+  const { first_name, last_name, gender, occupation, salary } = req.body;
 
   const staffMember = await Staff.findByIdAndUpdate(
     req.params.id,
     {
       first_name,
       last_name,
+      gender,
+      occupation,
       salary,
-      status,
     },
     { new: true }
   );

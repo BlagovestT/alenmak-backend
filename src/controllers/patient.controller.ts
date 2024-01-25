@@ -25,7 +25,7 @@ export const getSinglePatient = expressAsyncHandler(async (req, res) => {
 //!@route POST /api/patient/create
 //@access private
 export const createPatient = expressAsyncHandler(async (req, res) => {
-  const { first_name, last_name, age } = req.body;
+  const { first_name, last_name, gender, age, group } = req.body;
 
   if (!first_name || !last_name || !age) {
     res.status(400);
@@ -35,7 +35,9 @@ export const createPatient = expressAsyncHandler(async (req, res) => {
   const patient = new Patient({
     first_name,
     last_name,
+    gender,
     age,
+    group,
   });
 
   const createdPatient = await patient.save();
@@ -47,7 +49,7 @@ export const createPatient = expressAsyncHandler(async (req, res) => {
 //!@route PUT /api/patient/:id
 //@access private
 export const updatePatient = expressAsyncHandler(async (req, res) => {
-  const { first_name, last_name, age, paid, status } = req.body;
+  const { first_name, last_name, gender, age, group, status, paid } = req.body;
 
   const patient = await Patient.findByIdAndUpdate(
     req.params.id,
@@ -57,6 +59,8 @@ export const updatePatient = expressAsyncHandler(async (req, res) => {
       age,
       paid,
       status,
+      gender,
+      group,
     },
     { new: true }
   );

@@ -10,6 +10,7 @@ const patientSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    gender: { type: String, required: true },
     age: {
         type: Number,
         required: true,
@@ -23,6 +24,11 @@ const patientSchema = new mongoose_1.Schema({
         type: String,
         enum: ["active", "inactive", "released", "deceased"],
         default: "active",
+    },
+    group: {
+        type: String,
+        enum: ["група а", "група б"],
+        default: "O",
     },
 }, { timestamps: true });
 const Patient = mongoose_1.models.Patient || (0, mongoose_1.model)("Patient", patientSchema);

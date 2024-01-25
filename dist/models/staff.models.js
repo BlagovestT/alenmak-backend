@@ -10,6 +10,20 @@ const staffSchema = new mongoose_1.Schema({
         type: String,
         require: true,
     },
+    gender: { type: String, required: true },
+    occupation: {
+        type: String,
+        enum: [
+            "Санитар",
+            "Медицинска Сестра",
+            "Управител",
+            "Готвач",
+            "Социален Работник",
+            "Рехабилитатор",
+            "Болногледач",
+        ],
+        required: true,
+    },
     salary: {
         type: Number,
         required: true,

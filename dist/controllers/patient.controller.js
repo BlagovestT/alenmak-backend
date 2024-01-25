@@ -37,7 +37,7 @@ exports.getSinglePatient = (0, express_async_handler_1.default)((req, res) => __
 //!@route POST /api/patient/create
 //@access private
 exports.createPatient = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { first_name, last_name, age } = req.body;
+    const { first_name, last_name, gender, age, group } = req.body;
     if (!first_name || !last_name || !age) {
         res.status(400);
         throw new Error("All fields are required");
@@ -45,7 +45,9 @@ exports.createPatient = (0, express_async_handler_1.default)((req, res) => __awa
     const patient = new patient_model_1.default({
         first_name,
         last_name,
+        gender,
         age,
+        group,
     });
     const createdPatient = yield patient.save();
     res.status(201).json({ success: true, data: createdPatient });
@@ -54,13 +56,15 @@ exports.createPatient = (0, express_async_handler_1.default)((req, res) => __awa
 //!@route PUT /api/patient/:id
 //@access private
 exports.updatePatient = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { first_name, last_name, age, paid, status } = req.body;
+    const { first_name, last_name, gender, age, group, status, paid } = req.body;
     const patient = yield patient_model_1.default.findByIdAndUpdate(req.params.id, {
         first_name,
         last_name,
         age,
         paid,
         status,
+        gender,
+        group,
     }, { new: true });
     if (!patient) {
         res.status(404);

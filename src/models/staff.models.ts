@@ -4,6 +4,15 @@ export interface IStaff extends Document {
   _id: string;
   first_name: string;
   last_name: string;
+  gender: "male" | "female";
+  occupation:
+    | "Санитар"
+    | "Медицинска Сестра"
+    | "Управител"
+    | "Готвач"
+    | "Социален Работник"
+    | "Рехабилитатор"
+    | "Болногледач";
   salary: number;
   status: "paid" | "unpaid";
   createdAt: Date;
@@ -19,6 +28,20 @@ const staffSchema = new Schema(
     last_name: {
       type: String,
       require: true,
+    },
+    gender: { type: String, required: true },
+    occupation: {
+      type: String,
+      enum: [
+        "Санитар",
+        "Медицинска Сестра",
+        "Управител",
+        "Готвач",
+        "Социален Работник",
+        "Рехабилитатор",
+        "Болногледач",
+      ],
+      required: true,
     },
     salary: {
       type: Number,
