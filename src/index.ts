@@ -7,6 +7,7 @@ import { error, success } from "./helpers/logger";
 import authRoutes from "./routes/auth.routes";
 import patientRoutes from "./routes/patient.routes";
 import staffRoutes from "./routes/staff.routes";
+import documentRoutes from "./routes/document.routes";
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", authRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/staff", staffRoutes);
+app.use("/api/document", documentRoutes);
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "404: Route Not Found" });
 });
