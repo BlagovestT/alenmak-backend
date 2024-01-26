@@ -124,10 +124,17 @@ export const deleteDocument = asyncHandler(async (req, res) => {
 });
 
 //@desc Download a document
-//?@route GET /api/document/download/:fileName
+//?@route GET /api/document/download/:id
 //@access private
 export const downloadDocument = asyncHandler(async (req, res) => {
-  const fileName = req.params.fileName;
+  const document = await Document.findById(req.params.id);
+
+  if (!document) {
+    res.status(404);
+    throw new Error("Document not found");
+  }
+
+  const fileName = `${document.owner}-${document.file_name}`;
 
   const downloadedFile = await downloadFileFromDrive(fileName);
 
@@ -148,11 +155,18 @@ export const downloadDocument = asyncHandler(async (req, res) => {
 });
 
 //@desc Get document link from google drive
-//?@route GET /api/document/preview/:fileName
+//?@route GET /api/document/preview/:id
 //@access private
 export const getPreviewLink = asyncHandler(async (req, res) => {
-  const { fileName } = req.params;
-  const previewLink = await getDocumentPreviewLink(fileName);
+  const document = await Document.findById(req.params.id);
+
+  if (!document) {
+    res.status(404);
+    throw new Error("Document not found");
+  }
+
+  const previewLink = await getDocumentPreviewLink(document.fileName);
+
   res.status(200).json({
     success: true,
     data: previewLink,
