@@ -14,10 +14,10 @@ const router = express.Router();
 
 router.get("/all", validateToken, getAllDocuments);
 router.get("/:id", validateToken, getDocumentById);
-router.post("/owner/:id", validateToken, getDocumentByOwnerId);
-router.put("/create", validateToken, createDocument);
-router.delete("/delete", validateToken, deleteDocument);
-router.put("/download/:fileName", validateToken, downloadDocument);
-router.put("/preview/:fileName", validateToken, getPreviewLink);
+router.get("/owner/:id", validateToken, getDocumentByOwnerId);
+router.post("/:owner/create", validateToken, createDocument);
+router.delete("/delete/:id", validateToken, deleteDocument);
+router.get("/download/:fileName", validateToken, downloadDocument);
+router.get("/preview/:fileName", validateToken, getPreviewLink);
 
 export default router;

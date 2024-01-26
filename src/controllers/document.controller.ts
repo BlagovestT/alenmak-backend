@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Document from "../models/document.modal";
 import {
+  deleteFileFromDrive,
   downloadFileFromDrive,
   getDocumentPreviewLink,
   uploadFileToGoogleDrive,
@@ -54,10 +55,10 @@ export const getDocumentByOwnerId = asyncHandler(async (req, res) => {
 });
 
 //@desc Create a document
-//!@route POST /api/document/create
+//!@route POST /api/document/:owner/create
 //@access private
 export const createDocument = asyncHandler(async (req, res) => {
-  const { owner } = req.body;
+  const { owner } = req.params;
   const bb = busboy({ headers: req.headers });
 
   let fileAdded = false;
@@ -102,15 +103,22 @@ export const createDocument = asyncHandler(async (req, res) => {
 });
 
 //@desc Delete a document
-//!@route DELETE /api/document/delete
+//!@route DELETE /api/document/delete/:id
 //@access private
 export const deleteDocument = asyncHandler(async (req, res) => {
-  const document = await Document.findByIdAndDelete(req.params.id);
+  const document = await Document.findById(req.params.id);
 
   if (!document) {
     res.status(404);
     throw new Error("Document not found");
   }
+
+  await Document.findByIdAndDelete(req.params.id);
+
+  const formattedFileName = `${document.owner}-${document.file_name}`;
+  console.log(formattedFileName);
+
+  deleteFileFromDrive(formattedFileName);
 
   res.status(200).json({ success: true, message: "Document deleted" });
 });

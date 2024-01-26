@@ -60,10 +60,10 @@ exports.getDocumentByOwnerId = (0, express_async_handler_1.default)((req, res) =
     }
 }));
 //@desc Create a document
-//!@route POST /api/document/create
+//!@route POST /api/document/:owner/create
 //@access private
 exports.createDocument = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { owner } = req.body;
+    const { owner } = req.params;
     const bb = (0, busboy_1.default)({ headers: req.headers });
     let fileAdded = false;
     bb.on("file", (name, file, info) => __awaiter(void 0, void 0, void 0, function* () {
@@ -98,14 +98,18 @@ exports.createDocument = (0, express_async_handler_1.default)((req, res) => __aw
     req.pipe(bb);
 }));
 //@desc Delete a document
-//!@route DELETE /api/document/delete
+//!@route DELETE /api/document/delete/:id
 //@access private
 exports.deleteDocument = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const document = yield document_modal_1.default.findByIdAndDelete(req.params.id);
+    const document = yield document_modal_1.default.findById(req.params.id);
     if (!document) {
         res.status(404);
         throw new Error("Document not found");
     }
+    yield document_modal_1.default.findByIdAndDelete(req.params.id);
+    const formattedFileName = `${document.owner}-${document.file_name}`;
+    console.log(formattedFileName);
+    (0, fileStorageHelpers_1.deleteFileFromDrive)(formattedFileName);
     res.status(200).json({ success: true, message: "Document deleted" });
 }));
 //@desc Download a document

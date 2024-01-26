@@ -42,15 +42,15 @@ export const uploadFileToGoogleDrive = async (
       },
       requestBody: {
         name: filename,
-        parents: ["1DeaVaoSLAR9n6R5UdhKi0VURCQVSPeC4"],
+        parents: ["1HKz12Ey9e2e3vw_65QBlNLDYwMT1UBno"],
       },
     });
 
     if (uploadFile) {
       info(`File ${filename} uploaded successfully`);
     }
-  } catch (error) {
-    error(error);
+  } catch (err) {
+    error(err);
   }
 };
 
@@ -92,8 +92,8 @@ export const deleteFileFromDrive = async (fileName: string) => {
   try {
     await drive.files.delete({ fileId });
     info("File deleted successfully.");
-  } catch (error) {
-    error("Error deleting file:", error);
+  } catch (err) {
+    error("Error deleting file: " + err);
   }
 };
 

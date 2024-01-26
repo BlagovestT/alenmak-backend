@@ -38,15 +38,15 @@ const uploadFileToGoogleDrive = (filename, mimeType, file) => __awaiter(void 0, 
             },
             requestBody: {
                 name: filename,
-                parents: ["1DeaVaoSLAR9n6R5UdhKi0VURCQVSPeC4"],
+                parents: ["1HKz12Ey9e2e3vw_65QBlNLDYwMT1UBno"],
             },
         });
         if (uploadFile) {
             (0, logger_1.info)(`File ${filename} uploaded successfully`);
         }
     }
-    catch (error) {
-        error(error);
+    catch (err) {
+        (0, logger_1.error)(err);
     }
 });
 exports.uploadFileToGoogleDrive = uploadFileToGoogleDrive;
@@ -81,8 +81,8 @@ const deleteFileFromDrive = (fileName) => __awaiter(void 0, void 0, void 0, func
         yield drive.files.delete({ fileId });
         (0, logger_1.info)("File deleted successfully.");
     }
-    catch (error) {
-        error("Error deleting file:", error);
+    catch (err) {
+        (0, logger_1.error)("Error deleting file: " + err);
     }
 });
 exports.deleteFileFromDrive = deleteFileFromDrive;

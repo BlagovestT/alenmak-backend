@@ -9,10 +9,10 @@ const document_controller_1 = require("../controllers/document.controller");
 const router = express_1.default.Router();
 router.get("/all", validateTokenHandler_1.validateToken, document_controller_1.getAllDocuments);
 router.get("/:id", validateTokenHandler_1.validateToken, document_controller_1.getDocumentById);
-router.post("/owner/:id", validateTokenHandler_1.validateToken, document_controller_1.getDocumentByOwnerId);
-router.put("/create", validateTokenHandler_1.validateToken, document_controller_1.createDocument);
-router.delete("/delete", validateTokenHandler_1.validateToken, document_controller_1.deleteDocument);
-router.put("/download/:fileName", validateTokenHandler_1.validateToken, document_controller_1.downloadDocument);
-router.put("/preview/:fileName", validateTokenHandler_1.validateToken, document_controller_1.getPreviewLink);
+router.get("/owner/:id", validateTokenHandler_1.validateToken, document_controller_1.getDocumentByOwnerId);
+router.post("/:owner/create", validateTokenHandler_1.validateToken, document_controller_1.createDocument);
+router.delete("/delete/:id", validateTokenHandler_1.validateToken, document_controller_1.deleteDocument);
+router.get("/download/:fileName", validateTokenHandler_1.validateToken, document_controller_1.downloadDocument);
+router.get("/preview/:fileName", validateTokenHandler_1.validateToken, document_controller_1.getPreviewLink);
 exports.default = router;
 //# sourceMappingURL=document.routes.js.map
