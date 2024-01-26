@@ -113,10 +113,15 @@ exports.deleteDocument = (0, express_async_handler_1.default)((req, res) => __aw
     res.status(200).json({ success: true, message: "Document deleted" });
 }));
 //@desc Download a document
-//?@route GET /api/document/download/:fileName
+//?@route GET /api/document/download/:id
 //@access private
 exports.downloadDocument = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const fileName = req.params.fileName;
+    const document = yield document_modal_1.default.findById(req.params.id);
+    if (!document) {
+        res.status(404);
+        throw new Error("Document not found");
+    }
+    const fileName = `${document.owner}-${document.file_name}`;
     const downloadedFile = yield (0, fileStorageHelpers_1.downloadFileFromDrive)(fileName);
     const sanitizedFileName = encodeURIComponent(fileName);
     res.setHeader("Content-Disposition", `attachment; filename=${sanitizedFileName}`);
@@ -128,11 +133,15 @@ exports.downloadDocument = (0, express_async_handler_1.default)((req, res) => __
     });
 }));
 //@desc Get document link from google drive
-//?@route GET /api/document/preview/:fileName
+//?@route GET /api/document/preview/:id
 //@access private
 exports.getPreviewLink = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { fileName } = req.params;
-    const previewLink = yield (0, fileStorageHelpers_1.getDocumentPreviewLink)(fileName);
+    const document = yield document_modal_1.default.findById(req.params.id);
+    if (!document) {
+        res.status(404);
+        throw new Error("Document not found");
+    }
+    const previewLink = yield (0, fileStorageHelpers_1.getDocumentPreviewLink)(document.fileName);
     res.status(200).json({
         success: true,
         data: previewLink,

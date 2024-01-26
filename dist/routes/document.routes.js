@@ -12,7 +12,7 @@ router.get("/:id", validateTokenHandler_1.validateToken, document_controller_1.g
 router.get("/owner/:id", validateTokenHandler_1.validateToken, document_controller_1.getDocumentByOwnerId);
 router.post("/:owner/create", validateTokenHandler_1.validateToken, document_controller_1.createDocument);
 router.delete("/delete/:id", validateTokenHandler_1.validateToken, document_controller_1.deleteDocument);
-router.get("/download/:fileName", validateTokenHandler_1.validateToken, document_controller_1.downloadDocument);
-router.get("/preview/:fileName", validateTokenHandler_1.validateToken, document_controller_1.getPreviewLink);
+router.get("/download/:id", validateTokenHandler_1.validateToken, document_controller_1.downloadDocument);
+router.get("/preview/:id", validateTokenHandler_1.validateToken, document_controller_1.getPreviewLink);
 exports.default = router;
 //# sourceMappingURL=document.routes.js.map
