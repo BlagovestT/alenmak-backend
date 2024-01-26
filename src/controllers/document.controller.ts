@@ -165,7 +165,9 @@ export const getPreviewLink = asyncHandler(async (req, res) => {
     throw new Error("Document not found");
   }
 
-  const previewLink = await getDocumentPreviewLink(document.fileName);
+  const fileName = `${document.owner}-${document.file_name}`;
+
+  const previewLink = await getDocumentPreviewLink(fileName);
 
   res.status(200).json({
     success: true,

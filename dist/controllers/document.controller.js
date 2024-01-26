@@ -141,7 +141,8 @@ exports.getPreviewLink = (0, express_async_handler_1.default)((req, res) => __aw
         res.status(404);
         throw new Error("Document not found");
     }
-    const previewLink = yield (0, fileStorageHelpers_1.getDocumentPreviewLink)(document.fileName);
+    const fileName = `${document.owner}-${document.file_name}`;
+    const previewLink = yield (0, fileStorageHelpers_1.getDocumentPreviewLink)(fileName);
     res.status(200).json({
         success: true,
         data: previewLink,
