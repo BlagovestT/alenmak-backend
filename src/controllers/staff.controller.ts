@@ -1,4 +1,4 @@
-import Staff from "../models/staff.models";
+import Staff from "../models/staff.model";
 import expressAsyncHandler from "express-async-handler";
 
 //@desc Get all staff members

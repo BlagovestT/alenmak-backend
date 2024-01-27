@@ -13,20 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unpayStaffMember = exports.payStaffMember = exports.deleteStaffMember = exports.updateStaffMember = exports.createStaffMember = exports.getSingleStaffMember = exports.getAllStaffMembers = void 0;
-const staff_models_1 = __importDefault(require("../models/staff.models"));
+const staff_model_1 = __importDefault(require("../models/staff.model"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 //@desc Get all staff members
 //?@route GET /api/staff/members
 //@access private
 exports.getAllStaffMembers = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const staffMembers = yield staff_models_1.default.find({});
+    const staffMembers = yield staff_model_1.default.find({});
     res.status(200).json({ success: true, data: staffMembers });
 }));
 //@desc Get a single staff member
 //?@route GET /api/staff/member/:id
 //@access private
 exports.getSingleStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const staffMember = yield staff_models_1.default.findById(req.params.id);
+    const staffMember = yield staff_model_1.default.findById(req.params.id);
     if (!staffMember) {
         res.status(404);
         throw new Error("Staff member not found");
@@ -42,7 +42,7 @@ exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => _
         res.status(400);
         throw new Error("All fields are required");
     }
-    const staffMember = new staff_models_1.default({
+    const staffMember = new staff_model_1.default({
         first_name,
         last_name,
         gender,
@@ -57,7 +57,7 @@ exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => _
 //@access private
 exports.updateStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { first_name, last_name, gender, occupation, salary } = req.body;
-    const staffMember = yield staff_models_1.default.findByIdAndUpdate(req.params.id, {
+    const staffMember = yield staff_model_1.default.findByIdAndUpdate(req.params.id, {
         first_name,
         last_name,
         gender,
@@ -74,7 +74,7 @@ exports.updateStaffMember = (0, express_async_handler_1.default)((req, res) => _
 //!@route DELETE /api/staff/member/:id
 //@access private
 exports.deleteStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const staffMember = yield staff_models_1.default.findByIdAndDelete(req.params.id);
+    const staffMember = yield staff_model_1.default.findByIdAndDelete(req.params.id);
     if (!staffMember) {
         res.status(404);
         throw new Error("Staff member not found");
@@ -85,7 +85,7 @@ exports.deleteStaffMember = (0, express_async_handler_1.default)((req, res) => _
 //!@route PUT /api/staff/member/:id/pay
 //@access private
 exports.payStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const staffMember = yield staff_models_1.default.findByIdAndUpdate(req.params.id, {
+    const staffMember = yield staff_model_1.default.findByIdAndUpdate(req.params.id, {
         status: "paid",
     }, { new: true });
     if (!staffMember) {
@@ -98,7 +98,7 @@ exports.payStaffMember = (0, express_async_handler_1.default)((req, res) => __aw
 //!@route PUT /api/staff/member/:id/unpay
 //@access private
 exports.unpayStaffMember = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const staffMember = yield staff_models_1.default.findByIdAndUpdate(req.params.id, {
+    const staffMember = yield staff_model_1.default.findByIdAndUpdate(req.params.id, {
         status: "unpaid",
     }, { new: true });
     if (!staffMember) {
