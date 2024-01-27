@@ -1,4 +1,4 @@
-import asyncHandler from "express-async-handler";
+import expressAsyncHandler from "express-async-handler";
 import Document from "../models/document.modal";
 import {
   deleteFileFromDrive,
@@ -11,7 +11,7 @@ import busboy from "busboy";
 //@desc Get all documents
 //?@route GET /api/document/all
 //@access private
-export const getAllDocuments = asyncHandler(async (req, res) => {
+export const getAllDocuments = expressAsyncHandler(async (req, res) => {
   const documents = await Document.find({});
 
   res.status(200).json({
@@ -23,7 +23,7 @@ export const getAllDocuments = asyncHandler(async (req, res) => {
 //@desc Get document by id
 //?@route GET /api/document/:id
 //@access private
-export const getDocumentById = asyncHandler(async (req, res) => {
+export const getDocumentById = expressAsyncHandler(async (req, res) => {
   const document = await Document.findById(req.params.id);
 
   if (document) {
@@ -40,7 +40,7 @@ export const getDocumentById = asyncHandler(async (req, res) => {
 //@desc Get document by owner id
 //?@route GET /api/document/owner/:id
 //@access private
-export const getDocumentByOwnerId = asyncHandler(async (req, res) => {
+export const getDocumentByOwnerId = expressAsyncHandler(async (req, res) => {
   const documents = await Document.find({ owner: req.params.id });
 
   if (documents) {
@@ -57,7 +57,7 @@ export const getDocumentByOwnerId = asyncHandler(async (req, res) => {
 //@desc Create a document
 //!@route POST /api/document/:owner/create
 //@access private
-export const createDocument = asyncHandler(async (req, res) => {
+export const createDocument = expressAsyncHandler(async (req, res) => {
   const { owner } = req.params;
   const bb = busboy({ headers: req.headers });
 
@@ -105,7 +105,7 @@ export const createDocument = asyncHandler(async (req, res) => {
 //@desc Delete a document
 //!@route DELETE /api/document/delete/:id
 //@access private
-export const deleteDocument = asyncHandler(async (req, res) => {
+export const deleteDocument = expressAsyncHandler(async (req, res) => {
   const document = await Document.findById(req.params.id);
 
   if (!document) {
@@ -118,7 +118,7 @@ export const deleteDocument = asyncHandler(async (req, res) => {
   const formattedFileName = `${document.owner}-${document.file_name}`;
   console.log(formattedFileName);
 
-  deleteFileFromDrive(formattedFileName);
+  await deleteFileFromDrive(formattedFileName);
 
   res.status(200).json({ success: true, message: "Document deleted" });
 });
@@ -126,7 +126,7 @@ export const deleteDocument = asyncHandler(async (req, res) => {
 //@desc Download a document
 //?@route GET /api/document/download/:id
 //@access private
-export const downloadDocument = asyncHandler(async (req, res) => {
+export const downloadDocument = expressAsyncHandler(async (req, res) => {
   const document = await Document.findById(req.params.id);
 
   if (!document) {
@@ -157,7 +157,7 @@ export const downloadDocument = asyncHandler(async (req, res) => {
 //@desc Get document link from google drive
 //?@route GET /api/document/preview/:id
 //@access private
-export const getPreviewLink = asyncHandler(async (req, res) => {
+export const getPreviewLink = expressAsyncHandler(async (req, res) => {
   const document = await Document.findById(req.params.id);
 
   if (!document) {

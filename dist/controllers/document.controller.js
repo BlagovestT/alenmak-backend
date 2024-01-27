@@ -109,7 +109,7 @@ exports.deleteDocument = (0, express_async_handler_1.default)((req, res) => __aw
     yield document_modal_1.default.findByIdAndDelete(req.params.id);
     const formattedFileName = `${document.owner}-${document.file_name}`;
     console.log(formattedFileName);
-    (0, fileStorageHelpers_1.deleteFileFromDrive)(formattedFileName);
+    yield (0, fileStorageHelpers_1.deleteFileFromDrive)(formattedFileName);
     res.status(200).json({ success: true, message: "Document deleted" });
 }));
 //@desc Download a document

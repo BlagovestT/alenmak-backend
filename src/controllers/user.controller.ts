@@ -1,4 +1,4 @@
-import asyncHandler from "express-async-handler";
+import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
@@ -7,7 +7,7 @@ import User from "../models/user.model";
 //@desc Register a user
 //!@route POST /api/users/register
 //@access public
-export const registerUser = asyncHandler(
+export const registerUser = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { username, email, password } = req.body;
 
@@ -65,7 +65,7 @@ export const registerUser = asyncHandler(
 //@desc Login user
 //!@route POST /api/users/login
 //@access public
-export const loginUser = asyncHandler(
+export const loginUser = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
