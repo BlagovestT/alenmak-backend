@@ -78,7 +78,7 @@ export const deleteTransaction = expressAsyncHandler(async (req, res) => {
     throw new Error("Transaction not found");
   }
 
-  await transaction.remove();
+  await Transactions.findByIdAndDelete(req.params.id);
 
   res
     .status(200)

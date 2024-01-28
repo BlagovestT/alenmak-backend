@@ -76,7 +76,7 @@ exports.deleteTransaction = (0, express_async_handler_1.default)((req, res) => _
         res.status(404);
         throw new Error("Transaction not found");
     }
-    yield transaction.remove();
+    yield transactions_modal_1.default.findByIdAndDelete(req.params.id);
     res
         .status(200)
         .json({ success: true, message: "Transaction deleted successfully" });
