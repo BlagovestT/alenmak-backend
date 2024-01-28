@@ -1,5 +1,6 @@
 import expressAsyncHandler from "express-async-handler";
 import Transactions from "../models/transactions.modal";
+import { getMonthName } from "../helpers/helpers";
 
 //@desc Get all transactions
 //@route GET /api/transactions/all
@@ -214,16 +215,59 @@ export const getTotalIncomeAndExpensesForMonthAndYear = expressAsyncHandler(
       0
     );
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        data: {
-          totalIncome,
-          totalExpenses,
-          totalYearIncome,
-          totalYearExpenses,
-        },
+    res.status(200).json({
+      success: true,
+      data: {
+        totalIncome,
+        totalExpenses,
+        totalYearIncome,
+        totalYearExpenses,
+      },
+    });
+  }
+);
+
+//@desc Get total income and expenses per month for a year
+//@route GET /api/transactions/total/:year
+//@access private
+
+export const getTotalIncomeAndExpensesForYear = expressAsyncHandler(
+  async (req, res) => {
+    const { year } = req.params;
+
+    const transactions = await Transactions.find({ year });
+
+    const monthlyData = [];
+
+    for (let i = 1; i <= 12; i++) {
+      const monthName = getMonthName(i);
+      const transactionsForMonth = transactions.filter(
+        (transaction) =>
+          transaction.month === monthName && transaction.type === "income"
+      );
+
+      const totalIncomeForMonth = transactionsForMonth.reduce(
+        (total, transaction) => total + transaction.amount,
+        0
+      );
+
+      const transactionsForMonthExpenses = transactions.filter(
+        (transaction) =>
+          transaction.month === monthName && transaction.type === "expense"
+      );
+
+      const totalExpensesForMonth = transactionsForMonthExpenses.reduce(
+        (total, transaction) => total + transaction.amount,
+        0
+      );
+
+      monthlyData.push({
+        month: monthName,
+        totalIncome: totalIncomeForMonth,
+        totalExpenses: totalExpensesForMonth,
       });
+    }
+
+    res.json(monthlyData);
   }
 );

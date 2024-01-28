@@ -13,6 +13,7 @@ router.post("/create", validateTokenHandler_1.validateToken, transactions_contro
 router.put("/:id", validateTokenHandler_1.validateToken, transactions_controller_1.updateTransaction);
 router.delete("/:id", validateTokenHandler_1.validateToken, transactions_controller_1.deleteTransaction);
 router.get("/total/:month/:year", validateTokenHandler_1.validateToken, transactions_controller_1.getTotalIncomeAndExpensesForMonthAndYear);
+router.get("/total/:year", validateTokenHandler_1.validateToken, transactions_controller_1.getTotalIncomeAndExpensesForYear);
 router.get("/income/month/:month/:year", validateTokenHandler_1.validateToken, transactions_controller_1.getTotalIncomeForMonth);
 router.get("/expenses/month/:month/:year", validateTokenHandler_1.validateToken, transactions_controller_1.getTotalExpensesForMonth);
 router.get("/income/year/:year", validateTokenHandler_1.validateToken, transactions_controller_1.getTotalIncomeForYear);

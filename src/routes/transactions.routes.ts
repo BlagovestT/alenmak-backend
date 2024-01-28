@@ -7,6 +7,7 @@ import {
   getTotalExpensesForMonth,
   getTotalExpensesForYear,
   getTotalIncomeAndExpensesForMonthAndYear,
+  getTotalIncomeAndExpensesForYear,
   getTotalIncomeForMonth,
   getTotalIncomeForYear,
   getTransactionById,
@@ -26,6 +27,7 @@ router.get(
   validateToken,
   getTotalIncomeAndExpensesForMonthAndYear
 );
+router.get("/total/:year", validateToken, getTotalIncomeAndExpensesForYear);
 router.get("/income/month/:month/:year", validateToken, getTotalIncomeForMonth);
 router.get(
   "/expenses/month/:month/:year",
