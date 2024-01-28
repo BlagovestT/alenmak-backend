@@ -164,3 +164,66 @@ export const getTotalExpensesForYear = expressAsyncHandler(async (req, res) => {
 
   res.status(200).json({ success: true, data: totalExpenses });
 });
+
+//@desc Get total income and expenses for a specific month and year
+//@route GET /api/transactions/total/:month/:year
+//@access private
+export const getTotalIncomeAndExpensesForMonthAndYear = expressAsyncHandler(
+  async (req, res) => {
+    const { month, year } = req.params;
+
+    const incomeTransactions = await Transactions.find({
+      type: "income",
+      month,
+      year,
+    });
+
+    const totalIncome = incomeTransactions.reduce(
+      (total, transaction) => total + transaction.amount,
+      0
+    );
+
+    const expenseTransactions = await Transactions.find({
+      type: "expense",
+      month,
+      year,
+    });
+
+    const totalExpenses = expenseTransactions.reduce(
+      (total, transaction) => total + transaction.amount,
+      0
+    );
+
+    const yearIncomeTransactions = await Transactions.find({
+      type: "income",
+      year,
+    });
+
+    const totalYearIncome = yearIncomeTransactions.reduce(
+      (total, transaction) => total + transaction.amount,
+      0
+    );
+
+    const yearExpenseTransactions = await Transactions.find({
+      type: "expense",
+      year,
+    });
+
+    const totalYearExpenses = yearExpenseTransactions.reduce(
+      (total, transaction) => total + transaction.amount,
+      0
+    );
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        data: {
+          totalIncome,
+          totalExpenses,
+          totalYearIncome,
+          totalYearExpenses,
+        },
+      });
+  }
+);

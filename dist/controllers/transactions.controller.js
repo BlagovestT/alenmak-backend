@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTotalExpensesForYear = exports.getTotalIncomeForYear = exports.getTotalExpensesForMonth = exports.getTotalIncomeForMonth = exports.deleteTransaction = exports.updateTransaction = exports.createTransaction = exports.getTransactionById = exports.getAllTransactions = void 0;
+exports.getTotalIncomeAndExpensesForMonthAndYear = exports.getTotalExpensesForYear = exports.getTotalIncomeForYear = exports.getTotalExpensesForMonth = exports.getTotalIncomeForMonth = exports.deleteTransaction = exports.updateTransaction = exports.createTransaction = exports.getTransactionById = exports.getAllTransactions = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const transactions_modal_1 = __importDefault(require("../models/transactions.modal"));
 //@desc Get all transactions
@@ -130,5 +130,44 @@ exports.getTotalExpensesForYear = (0, express_async_handler_1.default)((req, res
     });
     const totalExpenses = transactions.reduce((total, transaction) => total + transaction.amount, 0);
     res.status(200).json({ success: true, data: totalExpenses });
+}));
+//@desc Get total income and expenses for a specific month and year
+//@route GET /api/transactions/total/:month/:year
+//@access private
+exports.getTotalIncomeAndExpensesForMonthAndYear = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { month, year } = req.params;
+    const incomeTransactions = yield transactions_modal_1.default.find({
+        type: "income",
+        month,
+        year,
+    });
+    const totalIncome = incomeTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+    const expenseTransactions = yield transactions_modal_1.default.find({
+        type: "expense",
+        month,
+        year,
+    });
+    const totalExpenses = expenseTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+    const yearIncomeTransactions = yield transactions_modal_1.default.find({
+        type: "income",
+        year,
+    });
+    const totalYearIncome = yearIncomeTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+    const yearExpenseTransactions = yield transactions_modal_1.default.find({
+        type: "expense",
+        year,
+    });
+    const totalYearExpenses = yearExpenseTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+    res
+        .status(200)
+        .json({
+        success: true,
+        data: {
+            totalIncome,
+            totalExpenses,
+            totalYearIncome,
+            totalYearExpenses,
+        },
+    });
 }));
 //# sourceMappingURL=transactions.controller.js.map
