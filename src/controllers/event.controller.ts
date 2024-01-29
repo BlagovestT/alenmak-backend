@@ -77,7 +77,7 @@ export const updateEvent = expressAsyncHandler(async (req, res) => {
 //!@route DELETE /api/event/:id
 //@access private
 export const deleteEvent = expressAsyncHandler(async (req, res) => {
-  const event = await Event.findByIdAndDelete(req.params.id);
+  const event = await Event.findOneAndDelete({ event_id: req.params.id });
   if (!event) {
     res.status(404);
     throw new Error("Event not found");

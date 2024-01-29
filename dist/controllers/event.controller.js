@@ -79,7 +79,7 @@ exports.updateEvent = (0, express_async_handler_1.default)((req, res) => __await
 //!@route DELETE /api/event/:id
 //@access private
 exports.deleteEvent = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const event = yield event_model_1.default.findByIdAndDelete(req.params.id);
+    const event = yield event_model_1.default.findOneAndDelete({ event_id: req.params.id });
     if (!event) {
         res.status(404);
         throw new Error("Event not found");
