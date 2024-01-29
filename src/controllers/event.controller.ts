@@ -57,13 +57,16 @@ export const updateEvent = expressAsyncHandler(async (req, res) => {
     throw new Error("All fields are required");
   }
 
-  const event = await Event.findByIdAndUpdate(req.params.id, {
-    title,
-    start,
-    end,
-    staff_id,
-    color,
-  });
+  const event = await Event.findOneAndUpdate(
+    { event_id: req.params.id },
+    {
+      title,
+      start,
+      end,
+      staff_id,
+      color,
+    }
+  );
 
   if (!event) {
     res.status(404);

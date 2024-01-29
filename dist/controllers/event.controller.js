@@ -62,7 +62,7 @@ exports.updateEvent = (0, express_async_handler_1.default)((req, res) => __await
         res.status(400);
         throw new Error("All fields are required");
     }
-    const event = yield event_model_1.default.findByIdAndUpdate(req.params.id, {
+    const event = yield event_model_1.default.findOneAndUpdate({ event_id: req.params.id }, {
         title,
         start,
         end,
