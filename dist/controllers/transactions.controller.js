@@ -14,20 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTotalIncomeAndExpensesForYear = exports.getTotalIncomeAndExpensesForMonthAndYear = exports.getTotalExpensesForYear = exports.getTotalIncomeForYear = exports.getTotalExpensesForMonth = exports.getTotalIncomeForMonth = exports.deleteTransaction = exports.updateTransaction = exports.createTransaction = exports.getTransactionById = exports.getAllTransactions = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const transactions_modal_1 = __importDefault(require("../models/transactions.modal"));
+const transactions_model_1 = __importDefault(require("../models/transactions.model"));
 const helpers_1 = require("../helpers/helpers");
 //@desc Get all transactions
 //@route GET /api/transactions/all
 //@access private
 exports.getAllTransactions = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const transactions = yield transactions_modal_1.default.find({});
+    const transactions = yield transactions_model_1.default.find({});
     res.status(200).json({ success: true, data: transactions });
 }));
 //@desc Get transaction by id
 //@route GET /api/transactions/:id
 //@access private
 exports.getTransactionById = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const transaction = yield transactions_modal_1.default.findById(req.params.id);
+    const transaction = yield transactions_model_1.default.findById(req.params.id);
     if (!transaction) {
         res.status(404);
         throw new Error("Transaction not found");
@@ -39,7 +39,7 @@ exports.getTransactionById = (0, express_async_handler_1.default)((req, res) => 
 //@access private
 exports.createTransaction = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, amount, type, category, month, year } = req.body;
-    const transaction = yield transactions_modal_1.default.create({
+    const transaction = yield transactions_model_1.default.create({
         title,
         amount,
         type,
@@ -54,7 +54,7 @@ exports.createTransaction = (0, express_async_handler_1.default)((req, res) => _
 //@access private
 exports.updateTransaction = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, amount, type, category, month, year } = req.body;
-    const transaction = yield transactions_modal_1.default.findById(req.params.id);
+    const transaction = yield transactions_model_1.default.findById(req.params.id);
     if (!transaction) {
         res.status(404);
         throw new Error("Transaction not found");
@@ -72,12 +72,12 @@ exports.updateTransaction = (0, express_async_handler_1.default)((req, res) => _
 //@route DELETE /api/transactions/:id
 //@access private
 exports.deleteTransaction = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const transaction = yield transactions_modal_1.default.findById(req.params.id);
+    const transaction = yield transactions_model_1.default.findById(req.params.id);
     if (!transaction) {
         res.status(404);
         throw new Error("Transaction not found");
     }
-    yield transactions_modal_1.default.findByIdAndDelete(req.params.id);
+    yield transactions_model_1.default.findByIdAndDelete(req.params.id);
     res
         .status(200)
         .json({ success: true, message: "Transaction deleted successfully" });
@@ -87,7 +87,7 @@ exports.deleteTransaction = (0, express_async_handler_1.default)((req, res) => _
 //@access private
 exports.getTotalIncomeForMonth = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { month, year } = req.params;
-    const transactions = yield transactions_modal_1.default.find({
+    const transactions = yield transactions_model_1.default.find({
         type: "income",
         month,
         year,
@@ -100,7 +100,7 @@ exports.getTotalIncomeForMonth = (0, express_async_handler_1.default)((req, res)
 //@access private
 exports.getTotalExpensesForMonth = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { month, year } = req.params;
-    const transactions = yield transactions_modal_1.default.find({
+    const transactions = yield transactions_model_1.default.find({
         type: "expense",
         month,
         year,
@@ -113,7 +113,7 @@ exports.getTotalExpensesForMonth = (0, express_async_handler_1.default)((req, re
 //@access private
 exports.getTotalIncomeForYear = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { year } = req.params;
-    const transactions = yield transactions_modal_1.default.find({
+    const transactions = yield transactions_model_1.default.find({
         type: "income",
         year,
     });
@@ -125,7 +125,7 @@ exports.getTotalIncomeForYear = (0, express_async_handler_1.default)((req, res) 
 //@access private
 exports.getTotalExpensesForYear = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { year } = req.params;
-    const transactions = yield transactions_modal_1.default.find({
+    const transactions = yield transactions_model_1.default.find({
         type: "expense",
         year,
     });
@@ -137,24 +137,24 @@ exports.getTotalExpensesForYear = (0, express_async_handler_1.default)((req, res
 //@access private
 exports.getTotalIncomeAndExpensesForMonthAndYear = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { month, year } = req.params;
-    const incomeTransactions = yield transactions_modal_1.default.find({
+    const incomeTransactions = yield transactions_model_1.default.find({
         type: "income",
         month,
         year,
     });
     const totalIncome = incomeTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-    const expenseTransactions = yield transactions_modal_1.default.find({
+    const expenseTransactions = yield transactions_model_1.default.find({
         type: "expense",
         month,
         year,
     });
     const totalExpenses = expenseTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-    const yearIncomeTransactions = yield transactions_modal_1.default.find({
+    const yearIncomeTransactions = yield transactions_model_1.default.find({
         type: "income",
         year,
     });
     const totalYearIncome = yearIncomeTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-    const yearExpenseTransactions = yield transactions_modal_1.default.find({
+    const yearExpenseTransactions = yield transactions_model_1.default.find({
         type: "expense",
         year,
     });
@@ -174,7 +174,7 @@ exports.getTotalIncomeAndExpensesForMonthAndYear = (0, express_async_handler_1.d
 //@access private
 exports.getTotalIncomeAndExpensesForYear = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { year } = req.params;
-    const transactions = yield transactions_modal_1.default.find({ year });
+    const transactions = yield transactions_model_1.default.find({ year });
     const monthlyData = [];
     for (let i = 1; i <= 12; i++) {
         const monthName = (0, helpers_1.getMonthName)(i);

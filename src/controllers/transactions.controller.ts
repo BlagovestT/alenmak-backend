@@ -1,5 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
-import Transactions from "../models/transactions.modal";
+import Transactions from "../models/transactions.model";
 import { getMonthName, getMonthNameInBulgarian } from "../helpers/helpers";
 
 //@desc Get all transactions

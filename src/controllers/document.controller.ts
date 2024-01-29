@@ -1,5 +1,5 @@
 import expressAsyncHandler from "express-async-handler";
-import Document from "../models/document.modal";
+import Document from "../models/document.model";
 import {
   deleteFileFromDrive,
   downloadFileFromDrive,

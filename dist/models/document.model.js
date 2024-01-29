@@ -9,4 +9,4 @@ const documentSchema = new mongoose_1.Schema({
 }, { timestamps: true });
 const Document = mongoose_1.models.Document || (0, mongoose_1.model)("Document", documentSchema);
 exports.default = Document;
-//# sourceMappingURL=document.modal.js.map
+//# sourceMappingURL=document.model.js.map

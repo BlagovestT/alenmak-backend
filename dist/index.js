@@ -14,6 +14,7 @@ const patient_routes_1 = __importDefault(require("./routes/patient.routes"));
 const staff_routes_1 = __importDefault(require("./routes/staff.routes"));
 const document_routes_1 = __importDefault(require("./routes/document.routes"));
 const transactions_routes_1 = __importDefault(require("./routes/transactions.routes"));
+const event_routes_1 = __importDefault(require("./routes/event.routes"));
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -24,6 +25,7 @@ app.use("/api/patient", patient_routes_1.default);
 app.use("/api/staff", staff_routes_1.default);
 app.use("/api/document", document_routes_1.default);
 app.use("/api/transactions", transactions_routes_1.default);
+app.use("/api/event", event_routes_1.default);
 app.use((req, res) => {
     res.status(404).json({ message: "404: Route Not Found" });
 });

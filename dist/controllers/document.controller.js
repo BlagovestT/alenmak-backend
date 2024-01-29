@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPreviewLink = exports.downloadDocument = exports.deleteDocument = exports.createDocument = exports.getDocumentByOwnerId = exports.getDocumentById = exports.getAllDocuments = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const document_modal_1 = __importDefault(require("../models/document.modal"));
+const document_model_1 = __importDefault(require("../models/document.model"));
 const fileStorageHelpers_1 = require("../helpers/FileStorage/fileStorageHelpers");
 const busboy_1 = __importDefault(require("busboy"));
 //@desc Get all documents
 //?@route GET /api/document/all
 //@access private
 exports.getAllDocuments = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const documents = yield document_modal_1.default.find({});
+    const documents = yield document_model_1.default.find({});
     res.status(200).json({
         success: true,
         data: documents,
@@ -31,7 +31,7 @@ exports.getAllDocuments = (0, express_async_handler_1.default)((req, res) => __a
 //?@route GET /api/document/:id
 //@access private
 exports.getDocumentById = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const document = yield document_modal_1.default.findById(req.params.id);
+    const document = yield document_model_1.default.findById(req.params.id);
     if (document) {
         res.status(200).json({
             success: true,
@@ -47,7 +47,7 @@ exports.getDocumentById = (0, express_async_handler_1.default)((req, res) => __a
 //?@route GET /api/document/owner/:id
 //@access private
 exports.getDocumentByOwnerId = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const documents = yield document_modal_1.default.find({ owner: req.params.id });
+    const documents = yield document_model_1.default.find({ owner: req.params.id });
     if (documents) {
         res.status(200).json({
             success: true,
@@ -69,7 +69,7 @@ exports.createDocument = (0, express_async_handler_1.default)((req, res) => __aw
     bb.on("file", (name, file, info) => __awaiter(void 0, void 0, void 0, function* () {
         const { filename, mimeType } = info;
         fileAdded = true;
-        const document = new document_modal_1.default({
+        const document = new document_model_1.default({
             owner: owner,
             file_name: filename,
             file_size: 0.1,
@@ -101,12 +101,12 @@ exports.createDocument = (0, express_async_handler_1.default)((req, res) => __aw
 //!@route DELETE /api/document/delete/:id
 //@access private
 exports.deleteDocument = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const document = yield document_modal_1.default.findById(req.params.id);
+    const document = yield document_model_1.default.findById(req.params.id);
     if (!document) {
         res.status(404);
         throw new Error("Document not found");
     }
-    yield document_modal_1.default.findByIdAndDelete(req.params.id);
+    yield document_model_1.default.findByIdAndDelete(req.params.id);
     const formattedFileName = `${document.owner}-${document.file_name}`;
     console.log(formattedFileName);
     yield (0, fileStorageHelpers_1.deleteFileFromDrive)(formattedFileName);
@@ -116,7 +116,7 @@ exports.deleteDocument = (0, express_async_handler_1.default)((req, res) => __aw
 //?@route GET /api/document/download/:id
 //@access private
 exports.downloadDocument = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const document = yield document_modal_1.default.findById(req.params.id);
+    const document = yield document_model_1.default.findById(req.params.id);
     if (!document) {
         res.status(404);
         throw new Error("Document not found");
@@ -136,7 +136,7 @@ exports.downloadDocument = (0, express_async_handler_1.default)((req, res) => __
 //?@route GET /api/document/preview/:id
 //@access private
 exports.getPreviewLink = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const document = yield document_modal_1.default.findById(req.params.id);
+    const document = yield document_model_1.default.findById(req.params.id);
     if (!document) {
         res.status(404);
         throw new Error("Document not found");

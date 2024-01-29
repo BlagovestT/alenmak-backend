@@ -48,4 +48,4 @@ const transactionsSchema = new mongoose_1.Schema({
 const Transactions = mongoose_1.models.Transactions ||
     (0, mongoose_1.model)("Transactions", transactionsSchema);
 exports.default = Transactions;
-//# sourceMappingURL=transactions.modal.js.map
+//# sourceMappingURL=transactions.model.js.map
