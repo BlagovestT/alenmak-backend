@@ -183,7 +183,7 @@ exports.getTotalIncomeAndExpensesForYear = (0, express_async_handler_1.default)(
         const transactionsForMonthExpenses = transactions.filter((transaction) => transaction.month === monthName && transaction.type === "expense");
         const totalExpensesForMonth = transactionsForMonthExpenses.reduce((total, transaction) => total + transaction.amount, 0);
         monthlyData.push({
-            month: monthName,
+            month: (0, helpers_1.getMonthNameInBulgarian)(i),
             totalIncome: totalIncomeForMonth,
             totalExpenses: totalExpensesForMonth,
         });

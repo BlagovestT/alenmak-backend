@@ -1,6 +1,6 @@
 import expressAsyncHandler from "express-async-handler";
 import Transactions from "../models/transactions.modal";
-import { getMonthName } from "../helpers/helpers";
+import { getMonthName, getMonthNameInBulgarian } from "../helpers/helpers";
 
 //@desc Get all transactions
 //@route GET /api/transactions/all
@@ -262,7 +262,7 @@ export const getTotalIncomeAndExpensesForYear = expressAsyncHandler(
       );
 
       monthlyData.push({
-        month: monthName,
+        month: getMonthNameInBulgarian(i),
         totalIncome: totalIncomeForMonth,
         totalExpenses: totalExpensesForMonth,
       });
