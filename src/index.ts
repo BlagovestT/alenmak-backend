@@ -10,6 +10,7 @@ import staffRoutes from "./routes/staff.routes";
 import documentRoutes from "./routes/document.routes";
 import transactionsRoutes from "./routes/transactions.routes";
 import eventRoutes from "./routes/event.routes";
+import tasksRoutes from "./routes/task.routes";
 
 const PORT = process.env.PORT || 5000;
 
@@ -25,6 +26,7 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/document", documentRoutes);
 app.use("/api/transactions", transactionsRoutes);
 app.use("/api/event", eventRoutes);
+app.use("/api/tasks", tasksRoutes);
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "404: Route Not Found" });
 });
