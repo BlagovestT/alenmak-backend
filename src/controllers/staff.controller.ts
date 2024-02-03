@@ -1,5 +1,6 @@
 import Staff from "../models/staff.model";
 import expressAsyncHandler from "express-async-handler";
+import randomColor from "randomcolor";
 
 //@desc Get all staff members
 //?@route GET /api/staff/members
@@ -38,6 +39,7 @@ export const createStaffMember = expressAsyncHandler(async (req, res) => {
     gender,
     occupation,
     salary,
+    color: randomColor(),
   });
 
   const createdStaffMember = await staffMember.save();

@@ -15,6 +15,7 @@ export interface IStaff extends Document {
     | "Болногледач";
   salary: number;
   status: "paid" | "unpaid";
+  color: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -51,6 +52,10 @@ const staffSchema = new Schema(
       type: String,
       enum: ["paid", "unpaid"],
       default: "unpaid",
+    },
+    color: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.unpayStaffMember = exports.payStaffMember = exports.deleteStaffMember = exports.updateStaffMember = exports.createStaffMember = exports.getSingleStaffMember = exports.getAllStaffMembers = void 0;
 const staff_model_1 = __importDefault(require("../models/staff.model"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
+const randomcolor_1 = __importDefault(require("randomcolor"));
 //@desc Get all staff members
 //?@route GET /api/staff/members
 //@access private
@@ -48,6 +49,7 @@ exports.createStaffMember = (0, express_async_handler_1.default)((req, res) => _
         gender,
         occupation,
         salary,
+        color: (0, randomcolor_1.default)(),
     });
     const createdStaffMember = yield staffMember.save();
     res.status(201).json({ success: true, data: createdStaffMember });
