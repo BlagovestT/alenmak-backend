@@ -8,7 +8,7 @@ export interface IPatient extends Document {
   age: number;
   paid: "paid" | "unpaid";
   status: "active" | "inactive" | "released" | "deceased";
-  group: "група а" | "група б";
+  group: "група 1" | "група 2" | "група 3" | "група 4";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -40,7 +40,7 @@ const patientSchema = new Schema(
     },
     group: {
       type: String,
-      enum: ["група а", "група б"],
+      enum: ["група 1", "група 2", "група 3", "група 4"],
       default: "O",
     },
   },

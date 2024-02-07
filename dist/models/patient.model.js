@@ -27,7 +27,7 @@ const patientSchema = new mongoose_1.Schema({
     },
     group: {
         type: String,
-        enum: ["група а", "група б"],
+        enum: ["група 1", "група 2", "група 3", "група 4"],
         default: "O",
     },
 }, { timestamps: true });
